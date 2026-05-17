@@ -1,0 +1,165 @@
+============================================
+THREAT MODEL — IoT Network Security
+Multi-Layer Attack Chain Assessment
+============================================
+Framework  : STRIDE
+============================================
+
+1. SYSTEM DESCRIPTION
+---------------------
+Target environment: Home/Office WiFi network with IoT devices including relay modules, and mobile devices.
+
+Assets identified:
+- User credentials (email/password)
+- Network traffic (all HTTP data)
+- Physical IoT devices (relay, lights, gates)
+- DNS resolution integrity
+- ARP table integrity
+
+2. ATTACK SURFACE
+-----------------
+Layer 2 (Data Link):
+→ ARP protocol has no authentication
+→ Any device on LAN can send ARP replies
+→ No verification of MAC-IP mappings
+
+Layer 3 (Network):
+→ DNS has no source verification (plain UDP)
+→ DNS responses accepted without validation
+→ No DNSSEC implementation on client
+
+Layer 7 (Application):
+→ HTTP traffic unencrypted
+→ No certificate pinning on victim browser
+→ User unaware of redirection
+
+RF Layer (Physical):
+→ EV1527 fixed code — no rolling code
+→ No encryption on 433MHz transmission
+→ No replay detection mechanism
+
+3. STRIDE ANALYSIS
+------------------
+S — Spoofing
+→ ARP spoofing impersonates gateway
+→ DNS spoofing impersonates legitimate servers
+→ Fake login page impersonates Google
+Risk: HIGH
+
+T — Tampering
+→ DNS responses tampered in transit
+→ HTTP responses replaced with fake page
+→ ARP cache tampered on victim device
+Risk: HIGH
+
+R — Repudiation
+→ Attack leaves minimal traces on victim
+→ No logging on victim device of ARP changes
+→ Attacker can restore ARP tables after attack
+Risk: MEDIUM
+
+I — Information Disclosure
+→ Credentials captured in plaintext
+→ All HTTP traffic visible to attacker
+→ RF signals captured passively
+Risk: HIGH
+
+D — Denial of Service
+→ ARP poisoning can cut victim's internet
+→ DNS spoofing can break all connections
+→ RF jamming can prevent legitimate remote use
+Risk: MEDIUM
+
+E — Elevation of Privilege
+→ Captured credentials allow account takeover
+→ RF replay allows unauthorized physical access
+→ MITM position allows session hijacking
+Risk: HIGH
+
+4. ATTACK VECTORS
+-----------------
+Vector 1 — Network Access Required
+→ Attacker must be on same WiFi network
+→ Realistic in public WiFi, shared networks,
+   compromised home networks
+
+Vector 2 — RF Range Required
+→ Attacker must be within 50-100 meters
+→ Realistic for neighbour, parking lot,
+   nearby building
+
+Vector 3 — No Special Privileges Required
+→ Standard WiFi connection sufficient
+→ Hardware (ESP32 + CC1101)
+→ Softwares (Kali Linux, Scapy)
+
+5. IMPACT ASSESSMENT
+--------------------
+
+- CIA triad compromised
+
+Confidentiality : HIGH
+→ User credentials exposed
+→ All HTTP traffic visible
+
+Integrity : HIGH
+→ DNS responses manipulated
+→ Web content replaced
+→ ARP tables corrupted
+
+Availability : MEDIUM
+→ Network access disrupted during attack
+→ IoT devices controllable by attacker
+
+Physical Impact : HIGH
+→ Relay actuation demonstrated
+→ Real world: garage doors, gate access,
+  alarm systems, industrial controls
+
+Overall Risk : CRITICAL
+
+6. MITIGATIONS
+--------------
+Against ARP Spoofing:
+→ Dynamic ARP Inspection (DAI) on managed switches
+→ Static ARP entries for critical devices
+→ ARP anomaly detection (as built in this project)
+→ Network segmentation
+
+Against DNS Spoofing:
+→ DNSSEC implementation
+→ DNS over HTTPS (DoH)
+→ Encrypted DNS resolvers (1.1.1.1, 8.8.8.8 DoH)
+
+Against Credential Phishing:
+→ HTTPS everywhere
+→ Certificate verification
+→ Two-factor authentication
+→ Password managers (detect fake domains)
+
+Against RF Replay:
+→ Rolling code protocols (KeeLoq)
+→ Signal encryption
+→ Frequency hopping
+→ Replace EV1527 devices
+
+7. DEFENCE IMPLEMENTED
+----------------------
+This project implements an ARP anomaly detector
+(detector.py) that:
+→ Monitors ARP table continuously
+→ Cross-references trusted MAC database
+→ Alerts within milliseconds of attack
+→ Logs all events with timestamps
+→ Proves defence is possible at low cost
+
+Detection time achieved: < 2 seconds
+False positive rate: 0 (trusted table based)
+
+8. CONCLUSION
+-------------
+This assessment demonstrates that a low-cost attacker (hardware, softwares) can compromise a network across multiple layers simultaneously — from Layer 2 ARP poisoning to physical IoT device actuation.
+
+The attack chain represents a realistic threat to home and office networks with IoT devices. Mitigations exist at each layer but require deliberate implementation.
+
+Most critically — physical consequences from network attacks represent an emerging threat as IoT adoption increases in homes, offices, and industrial environments.

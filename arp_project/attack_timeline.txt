@@ -1,0 +1,56 @@
+============================================
+ATTACK TIMELINE — IoT Security Assessment
+============================================
+Target Network  : 192.168.1.0/24
+Attacker        : 192.168.1.23 (Kali Linux)
+Victim Device   : 192.168.1.19 (Mobile)
+Gateway         : 192.168.1.1 (Router)
+Rogue Server    : 192.168.1.26 (ESP32)
+============================================
+
+PHASE 1 - RECON
+
+Target device identified: 192.168.1.19
+Gateway identified: 192.168.1.1
+
+PHASE 2 - Layer 2 ATTACK
+ARP poisoning initiated
+Victim ARP cache poisoned — gateway MAC replaced
+Gateway ARP cache poisoned — victim MAC replaced
+MITM position established
+ARP anomaly detector triggered alert
+
+PHASE 3 — Layer 3 ATTACK
+DNS spoofing initiated (dns_spoof.py)
+DNS queries intercepted from victim
+All domains redirected to 192.168.1.26
+
+PHASE 4 — LAYER 7 ATTACK
+Victim accessed http://192.168.1.26
+Fake Google login page served by ESP32
+Credentials submitted by victim
+Credentials captured on Serial Monitor
+Credentials captured on Logic 2 UART
+Credentials forwarded to Flask dashboard
+Victim shown fake 500 error page
+
+PHASE 5 — RF Replay ATTACK
+433MHz signal captured (code: 900066, 24-bit)
+CC1101 replay initiated
+Physical relay actuated
+Voltage spike confirmed on multimeter (0V → 12V)
+
+PHASE 6 — DETECTION
+ARP anomaly detector identified attack
+MAC spoofing alerted with timestamps
+All alerts logged to arp_alerts.log
+
+
+===============
+IMPACT SUMMARY
+===============
+- A complete MITM position achieved at Layer 2
+- DNS traffic intercepted and redirected
+- Victim credentials harvested via phishing
+- Physical device actuated remotelyyy
+- Attack detected by Detection System

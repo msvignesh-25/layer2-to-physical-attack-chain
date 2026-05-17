@@ -1,0 +1,74 @@
+============================================
+RF VULNERABILITY ANALYSIS
+433MHz EV1527 Replay Attack
+============================================
+Hardware   : CC1101 + ESP32 + Relay
+============================================
+
+1. Protocol Details
+
+Frequency  : 433.92 MHz
+Encoding   : EV1527 Learning Code
+Modulation : ASK/OOK (Amplitude Shift Keying)
+Code Length: 24 bits
+Protocol   : Fixed code (no rolling code)
+Captured   : Code 900066 (ON), Code 900065 (OFF)
+
+2. Vulnerability
+
+The EV1527 protocol transmits a "fixed" code every time the remote is pressed, which means:
+
+- No encryption
+- No rolling code mechanism
+- No challenge-response auth
+- No replay protection
+- Any device that cpatures the signal can re-transmit it
+
+3. Attack Methodology
+
+Step 1: CC1101 set to Rx mode at 433.92MHz
+Step 2: Original remote pressed once
+Step 3: RCSwitch library decoded signal
+          Decimal : 900066
+          Bits    : 24
+          Protocol: 1
+Step 4: CC1101 switched to Tx mode
+Step 5: Same signal retransmitted
+Step 6: Relay receiver accepted replay as legitimate
+Step 7: Physical relay actuated without remote
+
+4. Real World Impact
+
+Devices commonly using EV1527 fixed code:
+- Remote controlled lights and fans
+- Home automation relay switches
+- Garage door openers
+- Gate access control systems
+
+An attacker within the range (50-100 meters) can:
+- Capture signals passively without detection
+- Replay the signals at any time
+- Control physical devices without any authorization
+
+5. Affected Devices
+
+Low-cost RF remote control systems operating in the 433 MHz ISM band commonly use fixed-code or static-code transmission protocols such as EV1527. In such systems, the transmitted RF frame remains unchanged across repeated transmissions. The receiver validates the transmitted frame based on previously learned identifiers (called "learning-code", but researchers classify as "fixed-code") and doesn't verify whether the transmission is new or previously captured.
+Due to the absence of cryptographic authentication, rolling-code synchronization, or challenge-response validation, these devices are vulnerable to replay attacks.
+
+6. CVEs Disclosures
+
+While formal CVEs for low-cost fixed-code RF systems such as EV1527-based devices are relatively limited, replay attack vulnerabilities affecting these systems are extensively documented in academic research papers, RF security advisories. Due to the widespread use of generic OEM hardware, and vendor fragmentation, many vulnerabilities in low-cost 433 MHz RF devices are discussed through research literature than formal CVE disclosures.
+
+The paper [Resistance to Replay Attacks of Remote Control Protocols using the 433 MHz Radio Channel](https://www.researchgate.net/publication/379112500_Resistance_to_Replay_Attacks_of_Remote_Control_Protocols_using_the_433_MHz_Radio_Channel) analyses how frame transmission in fixed-code RF systems enables replay attacks through RF interception and re-transmission. This paper highlights that replay attacks can often be performed without firmware modification or cryptographic compromise, primarily due to freshness validation and dynamic authentication mechanisms.
+At the same time, the paper [Investigating RF vulnerabilities in IoT](https://www.mdpi.com/2624-831X/5/2/18) expands the discussion beyond EV1527-specific systems and examines replay attacks as part of a broader RF/IoT threat. In addition to replay attacks, the paper also discusses related RF threats such as jamming, and unauthorized wireless trigerring, thereby demonstrating that RF insecurity is often an vulnerability than a vulnerability limited to a single protocol implementation.
+Practical replay and jamming methodologies are additionally demonstrated in the GitHub research project [Jam and Replay Attack on Vehicular Keyless Entry Systems](https://github.com/trishmapow/rf-jam-replay). The project illustrates how attackers may combine RF interception, replay and signal jamming techniques to bypass wireless access-control systems, including systems using more advanced rolling-code architectures. The work demonstrates that replay resistance is alone not sufficient, when broader RF threat models such as signal suppression and replay manipulaiton is considered.
+
+7. Mitigation recommendations
+
+Thus mitigation approaches such as rolling-code sync or challenge-response auth alone are insufficient, since relay resistance also depends on synchronization reliability, implementation security and overall protocol architecture. We may implement frequency hopping spread spectrum, where both transmitter and receiver switches frequencies in a pre-defined synchronized pattern. Here, interception and jamming is difficult as they focus on a specific frequency, but the frequencies on which the transmitter and the receiever have communicated would have changed by the time. But the transmitter should always be in the range, else the synchronization might not work. So any solution to RF security architecture should be multi-layered rather than a standalone solution, which many low-code fixed-code protocols such as EV1527-based systems implement.
+
+8. Conclusion
+
+The EV1527 protocol's fixed code implementation represents a fundamental security vulnerability in a wide range of consumer IoT devices. This research demonstrates that with an CC1101 module and an ESP32, any attacker within RF range can permanently capture and replay control signals — gaining unauthorized physical access to protected spaces and devices.
+
+
