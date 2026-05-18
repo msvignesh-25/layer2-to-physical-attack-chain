@@ -43,6 +43,7 @@ Monitor -> Live Dashboard (Flask)
 
 ## Project Structure
 
+```
 arp_project/
 ├── attacker.py                    # ARP poisoner
 ├── dns_spoof.py                   # DNS interceptor
@@ -58,6 +59,8 @@ framework/
 analysis/
 ├── rf_vulnerability_analysis.txt  # RF security analysis
 ── README.md                       # This file
+
+```
 
 ---
 
