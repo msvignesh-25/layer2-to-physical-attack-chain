@@ -97,10 +97,16 @@ detector.py
 Detects MAC spoofing within 2 seconds, Logs all alerts
 
 ---
+## Demo video
+https://github.com/user-attachments/assets/c20af01b-5252-4365-91fc-ec1da15313e3
+
+---
 
 ## Key Findings 
-1. ARP protocol has zero authentication — any LAN device can impersonate any other device
-2. EV1527 433MHz protocol uses fixed codes — no rolling code, no encryption, trivially replayable
+1. **ARP** protocol has **zero authentication** — any LAN device can impersonate any other device
+2. EV1527 433MHz protocol uses **fixed codes** — no rolling code, no encryption, trivially replayable
+3. Unencrypted **DNS** Resolution is *Vulnerable* to Injection — Local **DNS over UDP** lacks integrity checks, allowing forged packets to overwrite routing tables before      legitimate gateway responds
+4. Fixed-code **Cryptographic Failures** — The absence of rolling-code mechanisms or dynamic handshakes ensures that any wireless signal captured over the air can be           *indefinitetly replayed* to manipulate physical hardware
 
 ---
 
