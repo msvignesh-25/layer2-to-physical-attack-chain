@@ -17,15 +17,17 @@ This project demonstrates a complete attack chain spanning Layer 2 through physi
 
 ## Attack Chain
 
+```
 Layer 2 -> ARP Poisoning (Kali + Scapy)
 Layer 3 -> DNS Spoofing (Kali + netfilterqueue)
 Layer 7 -> Web Server (ESP32 WiFi)
 UART Signal Capture (Salae Logic Analyser)
 RF Layer -> 433 MHz Signal Replay (CC1101 + ESP32)
 Physical -> Replay actuation (433 MHz relay)
-Defence -> ARP Anomaly Detector (Phyton)
+Defence -> ARP Anomaly Detector (Python)
 Monitor -> Live Dashboard (Flask)
 
+```
 ---
 
 ## Hardware Used
