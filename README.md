@@ -74,11 +74,11 @@ Identify devices for victim and gateway and get their IP and MAC addresses.
 
 ### Stage 2 - ARP Poisoning
 
-attacker.py
+Network traffic redirection via `attacker.py`.<br>Falsely maps the Gateway IP to the Attacker's MAC address using forged ARP responses.
 
 ### Stage 3 - DNS Spoofing
 
-iptables FORWARDED through Linux Kernel using NFQUEUE.<br>dns_spoof.py
+Traffic intercepted via iptables FORWARD and sent to Linux Kernel using NFQUEUE.<br>`dns_spoof.py` processes the queue to inject malicious DNS responses.
 
 ### Stage 4 - Credential Capture
 
