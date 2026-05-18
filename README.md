@@ -78,8 +78,7 @@ attacker.py
 
 ### Stage 3 - DNS Spoofing
 
-iptables FORWARDED through Linux Kernel using NFQUEUE.
-dns_spoof.py
+iptables FORWARDED through Linux Kernel using NFQUEUE.<br>dns_spoof.py
 
 ### Stage 4 - Credential Capture
 
