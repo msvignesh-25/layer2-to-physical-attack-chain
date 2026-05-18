@@ -100,6 +100,8 @@ Detects MAC spoofing within 2 seconds, Logs all alerts
 ## Demo video
 https://github.com/user-attachments/assets/c20af01b-5252-4365-91fc-ec1da15313e3
 
+**NOTE**: To hear the physical relay triggering during credential capture, turn on the audio 
+
 ---
 
 ## Key Findings 
@@ -122,6 +124,5 @@ https://github.com/user-attachments/assets/c20af01b-5252-4365-91fc-ec1da15313e3
 | detector_alert.jpg     | ARP anomaly detection output             |
 | wireshark_arp.jpg      | ARP poison packets at packet level       |
 | wireshark_dns.jpg      | DNS spoofing at packet level             |
-| relay_multimeter.jpg   | Voltage spike on relay actuation         |
 
 ---
