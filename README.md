@@ -116,13 +116,14 @@ https://github.com/user-attachments/assets/c20af01b-5252-4365-91fc-ec1da15313e3
 
 |        Evidence        |              Description                 |
 |------------------------|------------------------------------------|
-| fing_before.jpg        | Phone ARP table — real router MAC        |
-| fing_during.jpg        | Phone ARP table — spoofed to Kali MAC    |
-| dns_spoof_output.jpg   | DNS queries intercepted and redirected   |
-| logic2_credentials.jpg | Credentials decoded at UART signal level |
-| dashboard.jpg          | Live monitoring dashboard                |
-| detector_alert.jpg     | ARP anomaly detection output             |
-| wireshark_arp.jpg      | ARP poison packets at packet level       |
-| wireshark_dns.jpg      | DNS spoofing at packet level             |
+| [before_poison.jpg](assets/before_arp-poison.jpg)      | Phone ARP table — real router MAC        |
+| [during_poison.jpg](assets/during_arp-poison.jpg)        | Phone ARP table — spoofed to Kali MAC    |
+| [dns_spoof_output.png](assets/dns_spoof_output.png)   | DNS queries intercepted and redirected   |
+| [logic2_credentials_data.jpg](assets/Logic2_credentials.png) | Credentials decoded at UART signal level |
+| [logic2_credentials_wave.jpg](assets/Logic2_credentials_raw.png) | Credentials decoded at UART signal level (raw) |
+| [dashboard.jpg](assets/dashboard.jpg)          | Live monitoring dashboard                |
+| [detector_alert.jpg](assets/detector_alert.png)     | ARP anomaly detection output             |
+| [wireshark_arp.jpg](assets/wireshark_arp.png)      | ARP poison packets at packet level       |
+| [wireshark_dns.jpg](assets/wireshark_dns.png)      | DNS spoofing at packet level             |
 
 ---
