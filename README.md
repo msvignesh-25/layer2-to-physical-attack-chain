@@ -1,5 +1,7 @@
 # Multi-Layer IoT Security Attack Chain & Defence System
 
+[![Detailed Gallery](https://img.shields.io/badge/Presentation-View%20PDF-red?style=for-the-badge&logo=adobeacrobatreader)](Attack_Chain_Detailed_Gallery.pdf)
+
 > A complete end-to-end cyber-physical attack demonstration combining network, application, hardware and RF layers — built entirely in an isolated home lab environment for security research and awareness purposes.
 
 ---
