@@ -1,6 +1,6 @@
 # Multi-Layer IoT Security Attack Chain & Defence System
 
-[![Detailed Gallery](https://img.shields.io/badge/Detailed_Gallery-View%20PDF-red?style=for-the-badge&logo=adobeacrobatreader)](Attack_Chain_Detailed_Gallery.pdf)
+[![Detailed Gallery](https://img.shields.io/badge/Detailed_Gallery-View%20PDF-red?style=for-the-badge&logo=adobeacrobatreader)](attack-chain-analysis.pdf)
 
 > A complete end-to-end cyber-physical attack demonstration combining network, application, hardware and RF layers — built entirely in an isolated home lab environment for security research and awareness purposes.
 
@@ -111,6 +111,18 @@ https://github.com/user-attachments/assets/c20af01b-5252-4365-91fc-ec1da15313e3
 2. EV1527 433MHz protocol uses **fixed codes** — no rolling code, no encryption, trivially replayable
 3. Unencrypted **DNS** Resolution is *Vulnerable* to Injection — Local **DNS over UDP** lacks integrity checks, allowing forged packets to overwrite routing tables before      legitimate gateway responds
 4. Fixed-code **Cryptographic Failures** — The absence of rolling-code mechanisms or dynamic handshakes ensures that any wireless signal captured over the air can be           *indefinitetly replayed* to manipulate physical hardware
+
+---
+
+## Skills Demonstrated
+
+- ARP spoofing detection
+- DNS interception analysis
+- Python packet manipulation
+- CC1101 RF communication analysis
+- Flask dashboard development
+- ESP32 hardware interfacing
+- Linux-based offensive tooling
 
 ---
 
